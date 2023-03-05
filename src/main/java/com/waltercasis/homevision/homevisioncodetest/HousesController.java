@@ -35,6 +35,8 @@ public class HousesController {
             return housesApiClient.getHouses(page, perPage)
                     .map(houses -> ResponseEntity.ok(houses))
                     .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            // 1. Codigo/comentarios/tooooodo en ingles!
+                            // 2. Manejo de excepciones: devolver un DTO de error posta: https://reflectoring.io/spring-boot-exception-handling/: ver "@ControllerAdvice"
                             .body(Collections.singletonList(new House("-1", "Error desconocido al obtener las casas.", "", 0, "")))));
         }
 

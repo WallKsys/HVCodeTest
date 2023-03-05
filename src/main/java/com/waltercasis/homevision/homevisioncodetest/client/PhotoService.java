@@ -15,7 +15,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+// 1. codigo/comentarios en ingles
+//
 @Service
 public class PhotoService {
     private static final Logger log = LoggerFactory.getLogger(PhotoService.class);
@@ -56,10 +57,12 @@ public class PhotoService {
                                 FileUtils.writeByteArrayToFile(new File(photoFolder, filename), bytes);
                                 log.info("Photo of house " + house.getId() + " downloaded and saved successfully");
                             } catch (IOException e) {
+                                // Incluir info del error/foto que esta bajando. logging!
                                 throw new RuntimeException(e);
                             }
                         });
                     } else {
+                        // Incluir info del error/foto que esta bajando. logging!
                         return Mono.error(new RuntimeException("Failed to download photo"));
                     }
                 })
