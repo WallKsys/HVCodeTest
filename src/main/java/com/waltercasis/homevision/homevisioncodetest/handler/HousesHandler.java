@@ -36,14 +36,23 @@ public class HousesHandler {
      * @return a Mono that emits a HousesApiResponse with the retrieved data
      */
     @GetMapping("/{page}")
-    public Mono<HousesApiResponse> getHouses(@PathVariable("page") int page) {
+    public Mono<ApiResponse> getHouses(@PathVariable("page") int page) {
         return housesService.getHouses(page) // Call the HousesService to retrieve a page of data
-                .doOnError(throwable -> {
-                    // If an error occurs, log the error message and throw a ResponseStatusException
+                .flatMap(houses -> Mono.just(new ApiResponse("success", "Houses retrieved successfully", houses))) // If successful, create a success ApiResponse with the retrieved houses
+                .onErrorResume(throwable -> {
+                    // If an error occurs, log the error message and create an error ApiResponse with the error details
                     log.error("Error getting houses: " + throwable.getMessage());
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error getting houses");
+                    return Mono.just(new ApiResponse("error", "Error getting houses",
+                            Map.of(
+                                    "timestamp", LocalDateTime.now(),
+                                    "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                    "error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                                    "message", throwable.getMessage(),
+                                    "path", "/" + page
+                            )));
                 });
     }
+
 
 
     /**
