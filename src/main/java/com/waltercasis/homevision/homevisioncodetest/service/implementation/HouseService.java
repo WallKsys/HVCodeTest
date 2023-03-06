@@ -26,32 +26,40 @@ public class HouseService implements IHousesService {
 
     @Override
     public Mono<HousesApiResponse> getHouses(int page) {
+        // Call the getHouses() method of houseClient with the specified page number to retrieve a Mono of HousesApiResponse
         return houseClient.getHouses(page)
+                // Log the houses retrieved in the response
                 .flatMap(housesApiResponse -> {
                     log.info("Houses: " + housesApiResponse.getHouses());
+                    // Return the original Mono of HousesApiResponse
                     return Mono.just(housesApiResponse);
                 })
+                // Log any error that occurs
                 .doOnError(throwable -> log.error("Error getting houses: " + throwable.getMessage()));
     }
 
     @Override
-    public Mono<String> downloadAndSavePhoto(HouseResponse house, String path) {
-        return houseClient.downloadAndSavePhoto(house, path)
-                .flatMap(s -> {
+    public Mono<String> downloadAndSavePhoto(HouseResponse house) {
+        return houseClient.downloadAndSavePhoto(house) // calls the method to download and save a photo for the given house
+                .flatMap(s -> { // if successful, logs a message and returns the file name of the saved photo
                     log.info("Photo saved: " + s);
                     return Mono.just(s);
                 })
-                .doOnError(throwable -> log.error("Error saving photo for house id" +house.getId() + ": " + throwable.getMessage()));
+                .doOnError(throwable -> // if an error occurs, logs an error message
+                        log.error("Error saving photo for house id" + house.getId() + ": " + throwable.getMessage())
+                );
     }
 
+
     @Override
-    public Mono<Void> getHousesAndPhotos(int pageCount, String downloadPath) {
-        return Flux.range(1, pageCount)
-                .flatMap(page -> houseClient.getHouses(page)
-                        .flatMapMany(housesApiResponse -> Flux.fromIterable(housesApiResponse.getHouses()))
-                        .flatMap(house -> houseClient.downloadAndSavePhoto(house, downloadPath))
-                        .subscribeOn(Schedulers.parallel())
+    public Mono<Void> getHousesAndPhotos(int pageCount) {
+        return Flux.range(1, pageCount)  // Generate a stream of integers from 1 to pageCount
+                .flatMap(page -> houseClient.getHouses(page)  // For each page, retrieve a list of houses from the API
+                        .flatMapMany(housesApiResponse -> Flux.fromIterable(housesApiResponse.getHouses()))  // Transform the list of houses into a stream of individual houses
+                        .flatMap(house -> houseClient.downloadAndSavePhoto(house))  // For each house, download and save the photo
+                        .subscribeOn(Schedulers.parallel())  // Execute the operations on multiple threads
                 )
-                .then();
+                .then();  // Wait for all the operations to complete
     }
+
 }

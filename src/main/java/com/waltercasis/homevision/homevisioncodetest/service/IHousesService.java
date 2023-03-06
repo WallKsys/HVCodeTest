@@ -8,8 +8,8 @@ public interface IHousesService {
 
     Mono<HousesApiResponse> getHouses(int page);
 
-    Mono<String> downloadAndSavePhoto(HouseResponse house, String path);
+    Mono<String> downloadAndSavePhoto(HouseResponse house);
 
-    Mono<Void> getHousesAndPhotos(int pageCount, String downloadPath);
+    Mono<Void> getHousesAndPhotos(int pageCount);
 
 }
