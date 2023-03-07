@@ -21,8 +21,11 @@ import java.time.Duration;
 public class HouseClient {
 
 
-    @Value("${api.homevision.endpoint}")
-    String apiEndpoint;
+    @Value("${api.homevision.endpoint.url}")
+    String apiEndpointUrl;
+
+    @Value("${api.homevision.endpoint.path}")
+    String apiEndpointPath;
 
     @Value("${api.photo.folder}")
     String photoFolder;
@@ -44,10 +47,10 @@ public class HouseClient {
      * @return a Mono emitting a HousesApiResponse object representing the API response
      */
     public Mono<HousesApiResponse> getHouses(int page) {
-        return WebClient.create(apiEndpoint) // Create a new WebClient instance targeting the API endpoint
+        return WebClient.create(apiEndpointUrl) // Create a new WebClient instance targeting the API endpoint
                 .get() // Issue a GET request
                 .uri(uriBuilder -> uriBuilder // Build the request URI using a UriBuilder
-                        .path("/houses") // Set the path to "/houses"
+                        .path(apiEndpointPath) // Set the path to "/houses"
                         .queryParam("page", page) // Add a query parameter for the page number
                         .build())
                 .retrieve() // Retrieve the response
