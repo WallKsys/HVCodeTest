@@ -24,6 +24,12 @@ public class DefaultHouseService implements HousesService {
         this.houseClient = houseClient;
     }
 
+    /**
+     Retrieves houses from the houseClient for the specified page number and returns a Mono of HousesApiResponse.
+     Logs the houses retrieved in the response and any error that occurs during the process.
+     @param page the page number to retrieve houses from
+     @return a Mono of HousesApiResponse
+     */
     @Override
     public Mono<HousesApiResponse> getHouses(int page) {
         // Call the getHouses() method of houseClient with the specified page number to retrieve a Mono of HousesApiResponse
@@ -38,6 +44,15 @@ public class DefaultHouseService implements HousesService {
                 .doOnError(throwable -> log.error("Error getting houses: " + throwable.getMessage()));
     }
 
+    /**
+
+     Downloads and saves the photo for the given house, and returns a Mono of the file name of the saved photo.
+     Calls the {@code downloadAndSavePhoto} method of the {@code houseClient} to download and save the photo for the given house.
+     If the download and save operation is successful, logs a message indicating that the photo has been saved and returns a Mono of the file name.
+     If an error occurs during the download and save operation, logs an error message and returns a Mono of the error.
+     @param house the HouseResponse object representing the house whose photo is to be downloaded and saved
+     @return a Mono of the file name of the saved photo, or a Mono of the error if an error occurs during the download and save operation
+     */
     @Override
     public Mono<String> downloadAndSavePhoto(HouseResponse house) {
         return houseClient.downloadAndSavePhoto(house) // calls the method to download and save a photo for the given house
@@ -51,6 +66,12 @@ public class DefaultHouseService implements HousesService {
     }
 
 
+    /**
+
+     Retrieves houses from the API and downloads and saves their photos, for a specified number of pages.
+     @param pageCount the number of pages to retrieve houses from
+     @return a Mono that completes when all the houses have been retrieved and their photos have been downloaded and saved
+     */
     @Override
     public Mono<Void> getHousesAndPhotos(int pageCount) {
         return Flux.range(1, pageCount)  // Generate a stream of integers from 1 to pageCount
