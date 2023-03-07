@@ -14,7 +14,7 @@
     <name>homevision-code-test</name>
     <description>homevision code test</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
 
