@@ -36,10 +36,6 @@ public class HouseClient {
     }
 
 
-
-
-
-
     /**
      * Retrieves a list of houses from a remote API endpoint.
      *
@@ -62,48 +58,60 @@ public class HouseClient {
     }
 
     public Mono<String> downloadAndSavePhoto(HouseResponse house) {
+        // Get the URL, ID, and address of the photo from the HouseResponse object
         String photoUrl = house.getPhotoUrl();
         String id = house.getId();
         String address = house.getAddress();
 
+        // Get image file extension from URL
         String extension = photoUtils.getExtensionFromUrl(photoUrl);
 
+        // Create a file name using the image ID, address, and extension
         String fileName = photoUtils.createFileName(id, address, extension);
 
-
+        // Create the full path of the file to be saved
         String filePath = photoUtils.createFilePath(photoFolder, fileName);
 
+        // Create the directory if it doesn't exist
         photoUtils.createDirectoryIfNotExists(photoFolder);
 
+        // Check if the file already exists on the file system
         File file = new File(filePath);
         if (file.exists()) {
             log.info("Skipping download, file already exists: " + filePath);
             return Mono.just(fileName);
         }
 
+        // Download the photo and save it to the specified file
         return downloadPhoto(photoUrl, file)
-                .retryWhen(RetryBackoffSpec
+                .retryWhen(RetryBackoffSpec // Retry the request with exponential backoff if it fails with certain exceptions
                         .backoff(2, Duration.ofMillis(100))
                         .filter(this::shouldRetryOnError));
     }
 
     private Mono<String> downloadPhoto(String photoUrl, File file) {
-        return WebClient.create()
-                .get()
-                .uri(photoUrl)
-                .retrieve()
-                .bodyToMono(byte[].class)
-                .map(bytes -> {
-                    try (FileOutputStream fos = new FileOutputStream(file)) {
+        return WebClient.create() // create a new instance of WebClient
+                .get() // create a GET request
+                .uri(photoUrl) // set the URI to download from
+                .retrieve() // perform the request and retrieve the response
+                .bodyToMono(byte[].class) // convert the response to a Mono of byte array
+                .map(bytes -> { // map the byte array to a file name
+                    try (FileOutputStream fos = new FileOutputStream(file)) { // try to create a new FileOutputStream for the file
                         log.info("Saving the file: " + file.getPath());
-                        fos.write(bytes);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Error writing file: " + file.getPath(), e);
+                        fos.write(bytes); // write the byte array to the file
+                    } catch (IOException e) { // catch any IOException that might occur
+                        throw new RuntimeException("Error writing file: " + file.getPath(), e); // throw a RuntimeException if there's an error
                     }
-                    return file.getName();
+                    return file.getName(); // return the name of the file
                 });
     }
 
+
+    /**
+     Determines whether a download operation should be retried based on the type of exception that occurred.
+     @param t the {@link Throwable} object representing the exception that occurred
+     @return true if the download operation should be retried, false otherwise
+     */
     private boolean shouldRetryOnError(Throwable t) {
         return t instanceof WebClientResponseException.BadGateway ||
                 t instanceof WebClientResponseException.GatewayTimeout ||
