@@ -9,7 +9,7 @@ First I would like to clarify that I think I did not do exactly what CodeTest as
 
 ## How to use the application
 
-### Github Project
+### Github Project (Java 11 with Springboot and Reactor)
 
 Clone project locally
 
