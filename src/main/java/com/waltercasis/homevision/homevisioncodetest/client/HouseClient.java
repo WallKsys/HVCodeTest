@@ -68,6 +68,13 @@ public class HouseClient {
             directory.mkdir();
         }
 
+        // Check if the file already exists
+        File file = new File(filePath);
+        if (file.exists()) {
+            log.info("Skipping download, file already exists: " + filePath);
+            return Mono.just(fileName);
+        }
+
         // Use a WebClient to download the photo as a byte array
         return WebClient.create()
                 .get()
@@ -76,7 +83,6 @@ public class HouseClient {
                 .bodyToMono(byte[].class)
                 .map(bytes -> {
                     // Write the byte array to a file
-                    File file = new File(filePath);
                     try (FileOutputStream fos = new FileOutputStream(file)) {
                         log.info("saving the file: " + filePath);
                         fos.write(bytes);
@@ -94,6 +100,7 @@ public class HouseClient {
                                 t instanceof GatewayTimeout ||
                                 t instanceof ServiceUnavailable));
     }
+
 
 
 }

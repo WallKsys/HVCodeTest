@@ -3,7 +3,7 @@ package com.waltercasis.homevision.homevisioncodetest.service.implementation;
 import com.waltercasis.homevision.homevisioncodetest.client.HouseClient;
 import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
 import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.service.IHousesService;
+import com.waltercasis.homevision.homevisioncodetest.service.HousesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,13 @@ import reactor.core.scheduler.Schedulers;
 
 @Slf4j
 @Service
-public class HouseService implements IHousesService {
+public class DefaultHouseService implements HousesService {
 
 
     @Autowired
     private final HouseClient houseClient;
 
-    public HouseService(HouseClient houseClient) {
+    public DefaultHouseService(HouseClient houseClient) {
         this.houseClient = houseClient;
     }
 

@@ -1,8 +1,7 @@
 package com.waltercasis.homevision.homevisioncodetest.handler;
 
 import com.waltercasis.homevision.homevisioncodetest.model.response.ApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.service.implementation.HouseService;
+import com.waltercasis.homevision.homevisioncodetest.service.implementation.DefaultHouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -19,13 +17,13 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/houses")
-public class HousesHandler {
+public class HousesController {
 
 
-    private HouseService housesService;
+    private DefaultHouseService housesService;
 
     @Autowired
-    public HousesHandler(HouseService housesService) {
+    public HousesController(DefaultHouseService housesService) {
         this.housesService = housesService;
     }
 

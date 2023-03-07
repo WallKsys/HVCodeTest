@@ -4,7 +4,7 @@ import com.waltercasis.homevision.homevisioncodetest.model.response.HouseRespons
 import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
 import reactor.core.publisher.Mono;
 
-public interface IHousesService {
+public interface HousesService {
 
     Mono<HousesApiResponse> getHouses(int page);
 

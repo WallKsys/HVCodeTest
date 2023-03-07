@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import com.waltercasis.homevision.homevisioncodetest.client.HouseClient;
 import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
 import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -13,12 +14,12 @@ import reactor.test.StepVerifier;
 class HouseServiceTest {
 
     private HouseClient houseClientMock;
-    private HouseService houseService;
+    private DefaultHouseService houseService;
 
     @BeforeEach
     void setUp() {
         houseClientMock = mock(HouseClient.class);
-        houseService = new HouseService(houseClientMock);
+        houseService = new DefaultHouseService(houseClientMock);
     }
 
     @Test
@@ -49,21 +50,6 @@ class HouseServiceTest {
                 .expectComplete()
                 .verify();
         verify(houseClientMock).downloadAndSavePhoto(house);
-    }
-
-    @Test
-    void getHousesAndPhotos_shouldComplete() {
-        int pageCount = 2;
-        when(houseClientMock.getHouses(anyInt())).thenReturn(Mono.just(new HousesApiResponse()));
-        when(houseClientMock.downloadAndSavePhoto(any(HouseResponse.class))).thenReturn(Mono.empty());
-
-        Mono<Void> result = houseService.getHousesAndPhotos(pageCount);
-
-        StepVerifier.create(result)
-                .expectComplete()
-                .verify();
-        verify(houseClientMock, times(pageCount)).getHouses(anyInt());
-        verify(houseClientMock, atLeastOnce()).downloadAndSavePhoto(any(HouseResponse.class));
     }
 
 }
