@@ -2,15 +2,34 @@
 ## Introduction
 
 
-First I would like to clarify that I think I did not do exactly what CodeTest asked for. Since I did not make a method or executable file that does what is requested, I decided to make a kind of mini API with 2 endpoints.
+First I would like to clarify that I think I did not do exactly what CodeTest asked for. I decided to make a kind of mini API with 2 endpoints.
+
  - One that brings the results of hitting the Endpoint of the exercise with the page number **/{page}**
  - And another one that receives the maximum number of pages (pageCount) and performs the download of all the photos of the houses on page 1 up to pageCount. **/download/{pageCount}**
 
 ## How to use the application
 
-In order to test the application, it is as simple as executing the main class: **src/main/java/com/waltercasis/homevision/homevisioncodetest/HomevisionCodeTestApplication.java**
+### Github Project
 
-Once it's running, inside the **PostmanCollection folder**, you'll find a collection for Postman to import, and you have the two requests to each endpoint to test it.
+Clone project locally
+
+### Build and Run from Terminal
+
+- Install Maven build Tool if not already installed
+  ```brew install maven```
+- Build project from project's root directory.
+  ```mvn clean install```
+- Run app ffrom project's root directory
+  ```mvn spring-boot: run```
+
+
+### Build and Run from IDE  
+
+If you prefer, you can open project in an IDE such as IntelliJ:
+
+- Update maven project: In the maven bar menu, click on circular arrows.
+- Clean and install project: In the maven bar menu, expand project name, then expand Lifecycle item, click on clean first and then on install.
+- Run the following class (right click on class, then choose Run/Debug): ```src/main/java/com/waltercasis/homevision/homevisioncodetest/HomevisionCodeTestApplication.java```
 
 ## Brief summary of what I did
 
