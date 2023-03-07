@@ -46,7 +46,7 @@ If you prefer, you can open project in an IDE such as IntelliJ:
 
 `Information to take into account`
 
-- All methods have a retry scheme in case certain types of exceptions are returned by the provided endpoint.
+- All methods have a retry scheme in case certain types of exceptions are returned by the provided endpoint. I decided to implement this retry strategy, because I believe that it improves reliability against intermittent failures of external systems, increases fault tolerance, optimizes performance by reducing the number of failed operations, and avoids unnecessary interruptions in case of temporary failures.
 
 - The download of the photos is done using reactive programming and using multiple threads. Which depends on the number of pages that you want to go through, it is possible that you receive the response from the API with a 200 ok but you continue to see how photos appear in the imgs folder, because they are still being downloaded.
 
