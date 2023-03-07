@@ -20,7 +20,7 @@ Clone project locally
 - Build project from project's root directory.
   ```mvn clean install```
 - Run app ffrom project's root directory
-  ```mvn spring-boot: run```
+  ```mvn spring-boot:run```
 
 
 ### Build and Run from IDE  
