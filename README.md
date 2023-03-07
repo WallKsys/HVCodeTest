@@ -13,6 +13,15 @@ First I would like to clarify that I think I did not do exactly what CodeTest as
 
 Clone project locally
 
+### Local Configuration
+
+There are 4 properties that can be defined at will by modifying the application.properties file, they are:
+
+- ```server.port```: On which port will you want to launch the application (default ```8080```)
+- ```api.photo.folder```: The name of the directory where the photos will be saved (by default ```images```)
+- ```api.homevision.endpoint.url```: The url of the  endpoint provided for the CodeTest (Default: ```http://app-homevision-staging.herokuapp.com/api_project```)
+- ```api.homevision.endpoint.path```: the endpoint path provided for the CodeTest (default is ```/houses```)
+
 ### Build and Run from Terminal
 
 - Install Maven build Tool if not already installed
@@ -30,6 +39,17 @@ If you prefer, you can open project in an IDE such as IntelliJ:
 - Update maven project: In the maven bar menu, click on circular arrows.
 - Clean and install project: In the maven bar menu, expand project name, then expand Lifecycle item, click on clean first and then on install.
 - Run the following class (right click on class, then choose Run/Debug): ```src/main/java/com/waltercasis/homevision/homevisioncodetest/HomevisionCodeTestApplication.java```
+
+### Invoke API
+
+Any of the two endpoints listed below must be used. You can also use the Postman file inside the PostmanCollection directory by importing it into Postman.
+
+*To take into account: the methods listed here assume that the server.port is still 8080, if it was changed, replace the port with the one placed in the application.properties*
+
+```GET 'localhost:8080/houses/{page}'```
+
+```GET 'localhost:8080/houses/download/{pageCount}'```
+
 
 ## Brief summary of what I did
 
