@@ -77,7 +77,8 @@ public class DefaultHouseService implements HousesService {
         return Flux.range(1, pageCount)  // Generate a stream of integers from 1 to pageCount
                 .flatMap(page -> houseClient.getHouses(page)  // For each page, retrieve a list of houses from the API
                         .flatMapMany(housesApiResponse -> Flux.fromIterable(housesApiResponse.getHouses()))  // Transform the list of houses into a stream of individual houses
-                        .flatMap(house -> houseClient.downloadAndSavePhoto(house))  // For each house, download and save the photo
+                        .flatMap(house -> houseClient.downloadAndSavePhoto(house)
+                                .onErrorContinue((ex, obj) -> log.error("Error downloading photo for house {}: {}", house.getId(), ex.getMessage()))) // For each house, download and save the photo
                         .subscribeOn(Schedulers.parallel())  // Execute the operations on multiple threads
                 )
                 .then();  // Wait for all the operations to complete

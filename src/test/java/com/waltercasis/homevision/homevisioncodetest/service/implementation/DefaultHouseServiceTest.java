@@ -8,10 +8,15 @@ import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiRes
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-class HouseServiceTest {
+import java.lang.invoke.WrongMethodTypeException;
+import java.util.Arrays;
+
+class DefaultHouseServiceTest {
 
     private HouseClient houseClientMock;
     private DefaultHouseService houseService;
@@ -51,5 +56,33 @@ class HouseServiceTest {
                 .verify();
         verify(houseClientMock).downloadAndSavePhoto(house);
     }
+    @Ignore
+     public void testGetHousesAndPhotos() {
+        // Mock houseClient
+
+        HouseResponse house1 = new HouseResponse("1", "123 Main St", "owner", 12000,"https://example.com/photo1.jpg");
+        HouseResponse house2 = new HouseResponse("2", "456 Oak Ave", "owner", 12000, "https://example.com/photo2.jpg");
+        HousesApiResponse housesApiResponse1 = new HousesApiResponse(Arrays.asList(house1, house2), true);
+        Mockito.when(houseClientMock.getHouses(1)).thenReturn(Mono.just(housesApiResponse1));
+
+        // Mock downloadAndSavePhoto
+        Mockito.when(houseClientMock.downloadAndSavePhoto(house1)).thenReturn(Mono.just("photo1.jpg"));
+        Mockito.when(houseClientMock.downloadAndSavePhoto(house2)).thenReturn(Mono.error(new WebClientResponseException("Error", 500, "Error", null, null, null)));
+
+        // Create MyService instance and call method
+
+        Mono<Void> result = houseService.getHousesAndPhotos(1);
+
+        // Verify the method completes successfully
+        StepVerifier.create(result)
+                .expectComplete()
+                .verify();
+
+        // Verify the mocked methods were called with the expected arguments
+        Mockito.verify(houseClientMock, Mockito.times(1)).getHouses(1);
+        Mockito.verify(houseClientMock, Mockito.times(1)).downloadAndSavePhoto(house1);
+        Mockito.verify(houseClientMock, Mockito.times(1)).downloadAndSavePhoto(house2);
+    }
+
 
 }

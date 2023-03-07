@@ -15,4 +15,6 @@ public class HousesApiResponse {
     private List<HouseResponse> houses;
     @JsonProperty("ok")
     private boolean ok;
+
+
 }
