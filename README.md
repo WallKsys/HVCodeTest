@@ -80,5 +80,5 @@ There are things that could be improved, but I did not want to delay the deliver
 
 - Return the exceptions in their own DTO with the data considered necessary and have their own list of exceptions for each case. Ex: DownloadPhotoException, HouseNotFoundException, etc.
 
-- Probably more and better defined logs
+- Probably more and better defined logs. And definitely tests!
 
