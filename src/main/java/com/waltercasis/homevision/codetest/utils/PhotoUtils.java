@@ -1,14 +1,9 @@
-package com.waltercasis.homevision.homevisioncodetest.utils;
+package com.waltercasis.homevision.codetest.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 @Slf4j
 @Component

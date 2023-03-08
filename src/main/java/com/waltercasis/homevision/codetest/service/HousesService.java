@@ -1,7 +1,7 @@
-package com.waltercasis.homevision.homevisioncodetest.service;
+package com.waltercasis.homevision.codetest.service;
 
-import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
+import com.waltercasis.homevision.codetest.model.response.HouseResponse;
+import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
 import reactor.core.publisher.Mono;
 
 public interface HousesService {

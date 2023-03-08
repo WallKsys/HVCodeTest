@@ -1,8 +1,8 @@
-package com.waltercasis.homevision.homevisioncodetest.client;
+package com.waltercasis.homevision.codetest.client;
 
-import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.utils.PhotoUtils;
+import com.waltercasis.homevision.codetest.model.response.HouseResponse;
+import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
+import com.waltercasis.homevision.codetest.utils.PhotoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class HouseClient {
 
     @Value("${api.photo.folder}")
     String photoFolder;
-    private PhotoUtils photoUtils;
+    private final PhotoUtils photoUtils;
 
     public HouseClient(PhotoUtils photoUtils) {
         this.photoUtils = photoUtils;
@@ -57,6 +57,13 @@ public class HouseClient {
                         .filter(this::shouldRetryOnError));
     }
 
+    /**
+
+     Downloads and saves the photo for the specified house to the file system.
+     If the photo has already been downloaded, the method returns the file name without downloading it again.
+     @param house the house whose photo will be downloaded and saved
+     @return a Mono that emits the file name of the saved photo, or an error if the download failed
+     */
     public Mono<String> downloadAndSavePhoto(HouseResponse house) {
         // Get the URL, ID, and address of the photo from the HouseResponse object
         String photoUrl = house.getPhotoUrl();
@@ -88,7 +95,14 @@ public class HouseClient {
                         .backoff(2, Duration.ofMillis(100))
                         .filter(this::shouldRetryOnError));
     }
+    /**
 
+     Downloads a photo from the specified URL and saves it to the specified file.
+     @param photoUrl the URL of the photo to download
+     @param file the file to save the downloaded photo to
+     @return a Mono that emits the name of the saved file once the download and save is complete
+     @throws RuntimeException if there's an error writing the file
+     */
     private Mono<String> downloadPhoto(String photoUrl, File file) {
         return WebClient.create() // create a new instance of WebClient
                 .get() // create a GET request

@@ -1,9 +1,9 @@
-package com.waltercasis.homevision.homevisioncodetest.service.implementation;
+package com.waltercasis.homevision.codetest.service.implementation;
 
-import com.waltercasis.homevision.homevisioncodetest.client.HouseClient;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.service.HousesService;
+import com.waltercasis.homevision.codetest.client.HouseClient;
+import com.waltercasis.homevision.codetest.model.response.HouseResponse;
+import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
+import com.waltercasis.homevision.codetest.service.HousesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

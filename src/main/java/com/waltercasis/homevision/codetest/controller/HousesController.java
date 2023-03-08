@@ -1,7 +1,8 @@
-package com.waltercasis.homevision.homevisioncodetest.handler;
+package com.waltercasis.homevision.codetest.controller;
 
-import com.waltercasis.homevision.homevisioncodetest.model.response.ApiResponse;
-import com.waltercasis.homevision.homevisioncodetest.service.implementation.DefaultHouseService;
+import com.waltercasis.homevision.codetest.model.response.ApiResponse;
+
+import com.waltercasis.homevision.codetest.service.HousesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,10 @@ import java.util.Map;
 public class HousesController {
 
 
-    private DefaultHouseService housesService;
+    private HousesService housesService;
 
     @Autowired
-    public HousesController(DefaultHouseService housesService) {
+    public HousesController(HousesService housesService) {
         this.housesService = housesService;
     }
 

@@ -1,4 +1,4 @@
-package com.waltercasis.homevision.homevisioncodetest.model;
+package com.waltercasis.homevision.codetest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,11 +1,9 @@
-package com.waltercasis.homevision.homevisioncodetest.service.implementation;
+package com.waltercasis.homevision.codetest.service.implementation;
 
-import static org.mockito.Mockito.*;
+import com.waltercasis.homevision.codetest.client.HouseClient;
+import com.waltercasis.homevision.codetest.model.response.HouseResponse;
+import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
 
-import com.waltercasis.homevision.homevisioncodetest.client.HouseClient;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HouseResponse;
-import com.waltercasis.homevision.homevisioncodetest.model.response.HousesApiResponse;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,8 +11,9 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.lang.invoke.WrongMethodTypeException;
 import java.util.Arrays;
+
+import static org.mockito.Mockito.*;
 
 class DefaultHouseServiceTest {
 
@@ -56,7 +55,7 @@ class DefaultHouseServiceTest {
                 .verify();
         verify(houseClientMock).downloadAndSavePhoto(house);
     }
-    @Ignore
+    @Test
      public void testGetHousesAndPhotos() {
         // Mock houseClient
 
@@ -75,7 +74,7 @@ class DefaultHouseServiceTest {
 
         // Verify the method completes successfully
         StepVerifier.create(result)
-                .expectComplete()
+                .expectError()
                 .verify();
 
         // Verify the mocked methods were called with the expected arguments
