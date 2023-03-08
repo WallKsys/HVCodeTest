@@ -28,7 +28,7 @@ There are 4 properties that can be defined at will by modifying the application.
   ```brew install maven```
 - Build project from project's root directory.
   ```mvn clean install```
-- Run app ffrom project's root directory
+- Run app from project's root directory
   ```mvn spring-boot:run```
 
 
