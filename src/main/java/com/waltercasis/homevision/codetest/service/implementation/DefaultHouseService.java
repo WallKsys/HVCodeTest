@@ -4,7 +4,7 @@ import com.waltercasis.homevision.codetest.client.HouseClient;
 import com.waltercasis.homevision.codetest.model.response.HouseResponse;
 import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
 import com.waltercasis.homevision.codetest.service.HousesService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 
-@Slf4j
+@Log
 @Service
 public class DefaultHouseService implements HousesService {
 
@@ -41,7 +41,7 @@ public class DefaultHouseService implements HousesService {
                     return Mono.just(housesApiResponse);
                 })
                 // Log any error that occurs
-                .doOnError(throwable -> log.error("Error getting houses: " + throwable.getMessage()));
+                .doOnError(throwable -> log.info("Error getting houses: " + throwable.getMessage()));
     }
 
     /**
@@ -61,7 +61,7 @@ public class DefaultHouseService implements HousesService {
                     return Mono.just(s);
                 })
                 .doOnError(throwable -> // if an error occurs, logs an error message
-                        log.error("Error saving photo for house id" + house.getId() + ": " + throwable.getMessage())
+                        log.info("Error saving photo for house id" + house.getId() + ": " + throwable.getMessage())
                 );
     }
 
@@ -78,7 +78,7 @@ public class DefaultHouseService implements HousesService {
                 .flatMap(page -> houseClient.getHouses(page)  // For each page, retrieve a list of houses from the API
                         .flatMapMany(housesApiResponse -> Flux.fromIterable(housesApiResponse.getHouses()))  // Transform the list of houses into a stream of individual houses
                         .flatMap(house -> houseClient.downloadAndSavePhoto(house)
-                                .onErrorContinue((ex, obj) -> log.error("Error downloading photo for house {}: {}", house.getId(), ex.getMessage()))) // For each house, download and save the photo
+                                .onErrorContinue((ex, obj) -> log.info("Error downloading photo for house "+house.getId()+": "+ ex.getMessage()))) // For each house, download and save the photo
                         .subscribeOn(Schedulers.parallel())  // Execute the operations on multiple threads
                 )
                 .then();  // Wait for all the operations to complete

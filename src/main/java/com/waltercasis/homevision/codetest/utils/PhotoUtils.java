@@ -1,11 +1,10 @@
 package com.waltercasis.homevision.codetest.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-@Slf4j
+
 @Component
 public class PhotoUtils {
 

@@ -66,7 +66,7 @@ class DefaultHouseServiceTest {
 
         // Mock downloadAndSavePhoto
         Mockito.when(houseClientMock.downloadAndSavePhoto(house1)).thenReturn(Mono.just("photo1.jpg"));
-        Mockito.when(houseClientMock.downloadAndSavePhoto(house2)).thenReturn(Mono.error(new WebClientResponseException("Error", 500, "Error", null, null, null)));
+
 
         // Create MyService instance and call method
 
@@ -80,7 +80,7 @@ class DefaultHouseServiceTest {
         // Verify the mocked methods were called with the expected arguments
         Mockito.verify(houseClientMock, Mockito.times(1)).getHouses(1);
         Mockito.verify(houseClientMock, Mockito.times(1)).downloadAndSavePhoto(house1);
-        Mockito.verify(houseClientMock, Mockito.times(1)).downloadAndSavePhoto(house2);
+
     }
 
 

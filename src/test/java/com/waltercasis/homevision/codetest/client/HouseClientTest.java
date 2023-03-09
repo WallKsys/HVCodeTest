@@ -4,26 +4,18 @@ package com.waltercasis.homevision.codetest.client;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-
 import com.github.tomakehurst.wiremock.client.WireMock;
-
 import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
 import com.waltercasis.homevision.codetest.utils.PhotoUtils;
 import com.waltercasis.homevision.codetest.utils.TestUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.mockito.Mock;
-
-import org.springframework.mock.env.MockEnvironment;
 import org.springframework.test.context.TestPropertySource;
-
 import reactor.test.StepVerifier;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.waltercasis.homevision.codetest.utils.TestUtils.getResourceAsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

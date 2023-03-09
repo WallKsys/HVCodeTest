@@ -3,7 +3,7 @@ package com.waltercasis.homevision.codetest.client;
 import com.waltercasis.homevision.codetest.model.response.HouseResponse;
 import com.waltercasis.homevision.codetest.model.response.HousesApiResponse;
 import com.waltercasis.homevision.codetest.utils.PhotoUtils;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Duration;
 
-@Slf4j
+@Log
 @Component
 public class HouseClient {
 

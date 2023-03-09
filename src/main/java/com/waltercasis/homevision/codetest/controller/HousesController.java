@@ -1,9 +1,8 @@
 package com.waltercasis.homevision.codetest.controller;
 
 import com.waltercasis.homevision.codetest.model.response.ApiResponse;
-
 import com.waltercasis.homevision.codetest.service.HousesService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Slf4j
+@Log
 @RestController
 @RequestMapping("/houses")
 public class HousesController {
@@ -40,7 +39,7 @@ public class HousesController {
                 .flatMap(houses -> Mono.just(new ApiResponse("success", "Houses retrieved successfully", houses))) // If successful, create a success ApiResponse with the retrieved houses
                 .onErrorResume(throwable -> {
                     // If an error occurs, log the error message and create an error ApiResponse with the error details
-                    log.error("Error getting houses: " + throwable.getMessage());
+                    log.info("Error getting houses: " + throwable.getMessage());
                     return Mono.just(new ApiResponse("error", "Error getting houses",
                             Map.of(
                                     "timestamp", LocalDateTime.now(),
@@ -70,7 +69,7 @@ public class HousesController {
                         })) // Log a success message and return the ApiResponse
                 .onErrorResume(throwable -> {
                     // If an error occurs, log the error message and create an error ApiResponse with the error details
-                    log.error("Error downloading houses and photos: " + throwable.getMessage());
+                    log.info("Error downloading houses and photos: " + throwable.getMessage());
                     return Mono.just(new ApiResponse("error", "Error downloading houses and photos",
                             Map.of(
                                     "timestamp", LocalDateTime.now(),
