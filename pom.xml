@@ -95,6 +95,10 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -112,6 +116,10 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
 
